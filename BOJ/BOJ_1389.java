@@ -1,15 +1,9 @@
 package BOJ;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
-public class BOJ_1389 {
+class BOJ_1389 {
     static int N, M;
     static int[][] count;
     static LinkedList<Integer>[] friends;
@@ -34,28 +28,31 @@ public class BOJ_1389 {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             
-            friends[a].add(b);
-            friends[b].add(a);
+            if(!friends[a].contains(b) && !friends[b].contains(a)) {
+                friends[a].add(b);
+                friends[b].add(a);
+            }
         }
         
         for(int i=1; i<=N; i++){
             BFS(i);
         }
-        
+
+        int[] result = new int[N+1];
         for(int i=1; i<=N; i++){
         	int sum = 0;
             for(int j=1; j<=N; j++){
                 sum += count[i][j];
-            } count[i][0] = sum;
+            } result[i] = sum;
         }
         
-        int min = count[1][0];
+        int min = result[1];
         int idx = 1;
-        for(int i=2; i<=N; i++){
-            if(min > count[i][0]){
-                min = count[i][0];
-                idx = i;
-            }
+        for(int i=2; i<=N; i++) {
+        	if(min > result[i]) {
+        		min = result[i];
+        		idx = i;
+        	}
         }
         
         System.out.println(idx);
