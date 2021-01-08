@@ -6,20 +6,15 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class BOJ_1018 {
-	static int[] dx = {0, 0, -1, 1};
-	static int[] dy = {-1, 1, 0, 0};
-	
+	static char[] BW = {'B', 'W'};
     static char[][] chess;
-    static int count = 0;
-    
-    static int N, M;
     
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
        
         chess = new char[N][M];
         for(int i=0; i<N; i++){
@@ -27,42 +22,34 @@ public class BOJ_1018 {
         }
         
         int min = Integer.MAX_VALUE;
-        for(int i=0; i<N-8; i++){
-            for(int j=0; j<M-8; j++){
-            	count = 0;
-            	chessMake(i, j, 'B', 1);
-            	int countB = count;
+        for(int i=0; i<N-7; i++){
+            for(int j=0; j<M-7; j++){
+            	int b_cnt = chessMake(i, j, 0); // B
+            	int w_cnt = chessMake(i, j, 1); // W
             	
-            	count = 0;
-            	chessMake(i, j, 'W', 1);
-            	int countW = count;
-            	
-            	int tmp = Math.min(countW, countB);
-            	min = Math.min(min, tmp);
+            	min = Math.min(min, Math.min(b_cnt, w_cnt));
             }
         }
         
         System.out.println(min);
     }
     
-    public static void chessMake(int x, int y, char ch, int cnt){
-        if(cnt == 8) return;
-        
-    	if(chess[x][y] != ch) count++;
-    	for(int i=0; i<4; i++) {
-    		int nx = x + dx[i];
-    		int ny = y + dy[i];
-    		
-    		char tmp = 'B';
-    		if(ch == 'B') tmp = 'W';
-    		
-    		if(isCheck(nx, ny)) {
-    			chessMake(nx, ny, tmp, cnt+1);
+    public static int chessMake(int x, int y, int idx){
+    	int count = 0;
+    	
+    	for(int i=x; i<x+8; i++) {
+    		for(int j=y; j<y+8; j++) {
+    			if(chess[i][j] == BW[idx]) {
+    				if(j%2 != y%2) count++;
+    			} else {
+    				if(j%2 == y%2) count++;
+    			}
     		}
+    		
+    		if(idx == 0) idx = 1;
+    		else idx = 0;
     	}
-    }
-    
-    public static boolean isCheck(int x, int y) {
-    	return x>=0 && y>=0 && x<N && y<M;
+    	
+    	return count;
     }
 }
