@@ -1,4 +1,4 @@
-## :pencil: PS
+## :pencil: PS(Program Solving)
 
 코딩테스트를 위한 __알고리즘__ 풀기 :pencil2:
 
