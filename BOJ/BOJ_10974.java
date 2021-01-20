@@ -12,7 +12,7 @@ public class BOJ_10974 {
 		
 		boolean[] visited = new boolean[n+1];
 		for(int i=1; i<=n; i++) {
-			Stack<Integer> arr = new Stack<>();
+            int[] arr = new int[n+1];
 		
 			visited[i] = true;
 			DFS(arr, 1, i, visited);
@@ -20,12 +20,12 @@ public class BOJ_10974 {
 		}
 	}
 	
-	public static void DFS(Stack<Integer> arr, int size, int node, boolean[] visited) {
-		arr.push(node);
+	public static void DFS(int[] arr, int size, int node, boolean[] visited) {
+		arr[size] = node;
 		
 		if(size >= n) {
-			for(int i=0; i<arr.size(); i++) {
-				System.out.print(arr.get(i) + " ");
+			for(int i=1; i<=size; i++) {
+				System.out.print(arr[i] + " ");
 			} System.out.println();
 			
 			return;
@@ -35,7 +35,6 @@ public class BOJ_10974 {
 			if(!visited[i]) {
 				visited[i] = true;
 				DFS(arr, size+1, i, visited);
-				arr.pop();
 				visited[i] = false;
 			}
 		}
