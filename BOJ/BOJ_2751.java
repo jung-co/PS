@@ -10,15 +10,24 @@ class BOJ_2751 {
         
         int n = Integer.parseInt(br.readLine());
         
-        ArrayList<Integer> num = new ArrayList<>();
-        for(int i=0; i<n; i++){
-            num.add(Integer.parseInt(br.readLine()));
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        for(int i=0; i<n; i++) {
+        	int num = Integer.parseInt(br.readLine());
+        	q.offer(num);
         }
         
+        for(int i=0; i<n; i++) {
+        	sb.append(q.poll() + "\n");
+        }
+        
+        System.out.print(sb);
+        
+        /*
         Collections.sort(num);
         
         for(int val : num) {
         	sb.append(val).append('\n');
         } System.out.println(sb);
+        */
     }
 }
