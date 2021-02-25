@@ -3,11 +3,13 @@ package BOJ;
 import java.util.*;
 import java.io.*;
 
-public class BOJ {
+public class BOJ_9019 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
+		int n = Integer.parseInt(br.readLine());
 		
-        System.out.println(Math.ceil(-1.0 / -2));
-    }
+		for(int t=0; t<n; t++) {
+			
+		}
+	}
 }
