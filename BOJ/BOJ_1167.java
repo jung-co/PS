@@ -6,16 +6,29 @@ import java.io.*;
 public class BOJ_1167 {
 	static int n;
 	
-	static int[][] map;
+	static LinkedList<Edge>[] map;
 	static boolean[] visited;
 	static int[] list;
+	
+	public static class Edge {
+		int idx;
+		int val;
+		
+		public Edge(int idx, int val) {
+			this.idx = idx;
+			this.val = val;
+		}
+	}
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		
 		n = Integer.parseInt(br.readLine());
-		map = new int[n+1][n+1];
+		map = new LinkedList[n+1];
+		for(int i=1; i<=n; i++) {
+			map[i] = new LinkedList<>();
+		}
 		
 		for(int i=1; i<=n; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -26,43 +39,51 @@ public class BOJ_1167 {
 				if(v == -1) break;
 				
 				int e = Integer.parseInt(st.nextToken());
-				
-				map[num][v] = e;
+				map[num].add(new Edge(v, e));
 			}
 		}
 		
-		int max = Integer.MIN_VALUE;
-		for(int i=1; i<=n; i++) {
-			visited = new boolean[n+1];
-			list = new int[n+1];
-			
-			BFS(i);
-			
-			for(int j=1; j<=n; j++) {
-				if(max < list[j]) {
-					max = list[j];
-				}
+		int[] dist = BFS(1);
+		int start = 1;
+		for(int i=2; i<=n; i++) {
+			if(dist[i] > dist[start])
+				start = i;
+		}
+		
+		dist = BFS(start);
+		int ans = dist[1];
+		for(int i=2; i<=n; i++) {
+			if(ans < dist[i]) {
+				ans = dist[i];
 			}
 		}
 		
-		System.out.println(max);
+		System.out.println(ans);
 	}
 	
-	static void BFS(int node) {
+	static int[] BFS(int node) {
 		Queue<Integer> q = new LinkedList<>();
+		visited = new boolean[n+1];
+		
 		q.offer(node);
 		visited[node] = true;
 		
+		int[] dist = new int[n+1];
 		while(!q.isEmpty()) {
 			int loc = q.poll();
 			
-			for(int i=1; i<=n; i++) {
-				if(!visited[i] && map[loc][i]!=0) {
-					q.offer(i);
-					visited[i] = true;
-					list[i] = map[loc][i] + list[loc];
+			Iterator<Edge> iter = map[loc].iterator();
+			while(iter.hasNext()) {
+				Edge next = iter.next();
+				 
+				if(!visited[next.idx]) {
+					dist[next.idx]= dist[loc] + next.val;
+					q.offer(next.idx);
+					visited[next.idx] = true;
 				}
 			}
 		}
+		
+		return dist;
 	}
 }
