@@ -3,20 +3,17 @@ package BOJ;
 import java.util.*;
 import java.io.*;
 
-public class BOJ_11653 {
+public class BOJ_1676 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
-
-		int idx = 2;
-		StringBuilder sb = new StringBuilder();
-		while(n > 1) {
-			if(n%idx == 0) {
-				sb.append(idx + "\n");
-				n /= idx;
-			} else idx++;
+		
+		int cnt = 0;
+		while(n >= 5) {
+			cnt += n / 5;
+			n /= 5;
 		}
 		
-		System.out.println(sb);
+		System.out.println(cnt);
 	}
 }

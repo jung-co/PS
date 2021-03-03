@@ -6,9 +6,8 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class BOJ_1018 {
+	static char[] BW = {'B', 'W'};
     static char[][] chess;
-    static char[] BW = {'B', 'W'};
-    static int count = 0;
     
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,47 +21,35 @@ public class BOJ_1018 {
             chess[i] = br.readLine().toCharArray();
         }
         
-        int min = 0;
-        if(N == 8 && M == 8) {
-        	chessMake(0, 0, chess[0][0]);
-        	System.out.println(count);
-        	return;
-        }
-        
-        int n = N-8;
-        int m = M-8;
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                chessMake(i, j, chess[i][j]);
-                if(min > count){
-                    min = count;
-                }
+        int min = Integer.MAX_VALUE;
+        for(int i=0; i<N-7; i++){
+            for(int j=0; j<M-7; j++){
+            	int b_cnt = chessMake(i, j, 0); // B
+            	int w_cnt = chessMake(i, j, 1); // W
+            	
+            	min = Math.min(min, Math.min(b_cnt, w_cnt));
             }
         }
         
         System.out.println(min);
     }
     
-    public static void chessMake(int y, int x, char ch){
-        count = 0;
-        int idx = 0;
-        if(ch == BW[1]) idx = 1;
-        
-        for(int i=y; i<y+8; i++){
-            for(int j=x; j<x+8; j++){
-                char tmp = chess[i][j];
-                
-                if(j%2 == idx){
-                    if(ch != BW[idx])
-                        count++;
-                } else {
-                    if(ch != BW[j%2])
-                        count++;
-                }
-            }
-            
-            if(idx == 0) idx = 1;
-            else idx = 0;
-        }
+    public static int chessMake(int x, int y, int idx){
+    	int count = 0;
+    	
+    	for(int i=x; i<x+8; i++) {
+    		for(int j=y; j<y+8; j++) {
+    			if(chess[i][j] == BW[idx]) {
+    				if(j%2 != y%2) count++;
+    			} else {
+    				if(j%2 == y%2) count++;
+    			}
+    		}
+    		
+    		if(idx == 0) idx = 1;
+    		else idx = 0;
+    	}
+    	
+    	return count;
     }
 }
