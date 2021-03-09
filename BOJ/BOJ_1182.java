@@ -24,9 +24,9 @@ public class BOJ_1182 {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
 		
+		count = 0;
 		back(0, 0);
-		if(s == 0) count -= 1;
-		
+		if(s==0) count-=1;
 		System.out.println(count);
 	}
 	
@@ -34,9 +34,9 @@ public class BOJ_1182 {
 		if(val == s) count++;
 		
 		for(int i=idx; i<n; i++) {
-			if(!visited[i]){
+			if(!visited[i]) {
 				visited[i] = true;
-				back(i, val + arr[i]);
+				back(i, arr[i]+val);
 				visited[i] = false;
 			}
 		}
