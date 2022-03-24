@@ -4,8 +4,46 @@ import java.util.*;
 import java.io.*;
 
 public class BOJ_1406 {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String[] args) throws IOException {
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	String[] str = br.readLine().split("");
+	Stack<String> stack = new Stack<>();
+	for(int i=0; i<str.length; i++){
+		stack.push(str[i]);
+	}
+
+	int n = Integer.parseInt(br.readLine());
+	Stack<String> tmp = new Stack<String>();
+	StringTokenizer st;
+	for(int i=0; i<n; i++){
+		st = new StringTokenizer(br.readLine());
+
+		String opr = st.nextToken();
+		String num;
+		if(opr.equals("P")){
+			num = st.nextToken();
+			stack.push(num);
+		} else if(opr.equals("L") && !stack.isEmpty()){
+			tmp.push(stack.pop());
+		} else if(opr.equals("D") && !tmp.isEmpty()){
+			stack.push(tmp.pop());
+		} else if(opr.equals("B") && !stack.isEmpty()){
+			stack.pop();
+		}
+	}
+
+	while(!stack.isEmpty()){
+		tmp.push(stack.pop());
+	}
+
+	StringBuilder sb = new StringBuilder();
+	while(!tmp.isEmpty()){
+		sb.append(tmp.pop());
+	}
+
+	System.out.println(sb.toString());
+}
+/*        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         
         String str = br.readLine();
         int n = Integer.parseInt(br.readLine());
@@ -42,15 +80,15 @@ public class BOJ_1406 {
         }
         
         System.out.println(sb);
-        /* linkedList¶û stack »ç¿ë */
-        /*
+        *//* linkedListï¿½ï¿½ stack ï¿½ï¿½ï¿½ *//*
+        *//*
         LinkedList<Character> list = new LinkedList<>();
         Stack<Character> tmp = new Stack<>();
         for(int i=0; i<str.length(); i++) {
         	list.add(str.charAt(i));
         }
         
-        int size = str.length(); // ¹®ÀÚ¿­ÀÇ ±æÀÌ
+        int size = str.length(); // ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for(int i=0; i<n; i++) {
         	StringTokenizer st = new StringTokenizer(br.readLine());
         	
@@ -80,6 +118,6 @@ public class BOJ_1406 {
         }
         
         System.out.println(sb);
-        */
-    }
+        *//*
+    }*/
 }

@@ -5,6 +5,23 @@ import java.io.*;
 
 class BOJ_2751 {
     public static void main(String[] args) throws IOException {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(System.out));
+
+                int n = Integer.parseInt(br.readLine());
+                PriorityQueue<Integer> q = new PriorityQueue<>();
+                for(int i=0; i<n; i++){
+                    q.offer(Integer.parseInt(br.readLine()));
+                }
+
+                for(int i=0; i<n; i++){
+                    wr.write(q.poll() + "\n");
+                }
+
+                wr.flush();
+                wr.close();
+
+        /*
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         
@@ -21,7 +38,7 @@ class BOJ_2751 {
         }
         
         System.out.print(sb);
-        
+        */
         /*
         Collections.sort(num);
         
